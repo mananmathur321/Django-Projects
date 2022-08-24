@@ -1,0 +1,59 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block b1 %}
+   <div class="row">
+        <div class="col-sm-4">
+            <h3 class="text-center alert alert-info">Add Person</h3>
+            <form action="" method="POST" novalidate>
+                {% csrf_token %}
+                {{pers.as_p}}
+                <input type="submit" class="btn btn-success" value="Add">
+            </form>
+        </div>
+
+        <div class="col-sm-7 offset-1">
+            <h3 class="text-center alert alert-info">Person Information</h3>
+            {% if per %}
+                <h2 class="text-center alert alert-warning">Data</h2>
+              
+
+                <table class="table table-hover">
+                    <thead>
+                      <tr>
+                        <th scope="col">Name</th>
+                        <th scope="col">Phone Number</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Password</th>
+                        <th scope="col">Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                        {% for pr in per %}
+                            <tr>
+                                <th scope="row">{{pr.name}}</th>
+                                <td>{{pr.pno}}</td>
+                                <td>{{pr.email}}</td>
+                                <td>{{pr.pwd}}</td>
+                                <td>
+                                    <a href="{% url 'updwin' pr.pno %}" class="btn btn-warning btn-sm">Edit</a>
+
+                                    <form action="{% url 'deleted' pr.pno %}" method="post" class="d-inline">
+                                        {% csrf_token %}
+                                        <button type="submit" class="btn btn-danger" value="Delete">Delete</button>
+                                    </form>
+
+                                </td>
+                            </tr>
+                        {% endfor per %}
+                        </tbody>
+                  </table>
+
+                  {% else %}
+                  <h2 class="text-center alert alert-warning">No Data Found</h2>
+            {% endif %}
+            
+            
+        </div>
+   </div>
+{% endblock b1 %}

@@ -1,0 +1,82 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+
+{% block b1 %}
+<nav class="navbar" style="margin-bottom: 1%;">
+    <div class="container-fluid">
+        <span class="navbar-brand mb-0 h1 text-center alert alert-success">
+            Welcome {{name}}
+        </span>
+        <span>
+            <a href="{% url 'logout'%}" class="btn btn-outline-danger" style="float: right;">Logout
+            </a>
+        </span>
+    </div>
+  </nav>    
+{% endblock b1 %}
+    
+{% block b2 %}
+
+   <div class="row">
+        <div class="col-sm-4">
+            <h3 class="text-center alert alert-info">Add Person</h3>
+            <form action="" method="POST" novalidate>
+                {% csrf_token %}
+                <p>
+                    {% for x in pers%}
+                        {{x.label_tag}}
+                        <span style="color: red;">{{x.errors|striptags}}</span>
+                        <br>
+                        {{x}}
+                        <br>
+                    {% endfor %}
+                    <!-- {{pers.as_p}} -->
+                </p> 
+                <input type="submit" class="btn btn-success" value="Add">
+            </form>
+        </div>
+
+        <div class="col-sm-7 offset-1">
+            <h3 class="text-center alert alert-info">Person Information</h3>
+            {% if per %}
+                <table class="table table-hover">
+                    <caption class="text alert alert-warning h2" style="text-align:center;caption-side:top">Data</caption>
+                    <thead>
+                      <tr>
+                        <th scope="col">Name</th>
+                        <th scope="col">Phone Number</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Password</th>
+                        <th scope="col">Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                        {% for pr in per %}
+                            <tr>
+                                <th scope="row">{{pr.name}}</th>
+                                <td>{{pr.pno}}</td>
+                                <td>{{pr.email}}</td>
+                                <td>{{pr.pwd}}</td>
+                                <td>
+                                    <a href="{% url 'updwin' pr.pno %}" class="btn btn-warning btn-sm">Edit</a>
+
+                                    <form action="{% url 'deleted' pr.pno %}" method="post" class="d-inline">
+                                        {% csrf_token %}
+                                        <button type="submit" class="btn btn-danger" value="Delete">Delete</button>
+                                    </form>
+
+                                </td>
+                            </tr>
+                        {% endfor per %}
+                        </tbody>
+                  </table>
+
+                  {% else %}
+                  <h2 class="text-center alert alert-warning">No Data Found</h2>
+            {% endif %}
+            
+            
+        </div>
+   </div>
+{% endblock b2 %}

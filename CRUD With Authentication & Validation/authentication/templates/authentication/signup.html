@@ -1,0 +1,23 @@
+{% extends "core/base.html" %}
+{% load static %}
+{% block b1 %}
+    <div class="container mt-5">
+        <h1 class="text-center alert alert-danger">Log In</h1>
+
+        <form action="" method="post" novalidate>
+            {% csrf_token %}
+
+            
+            {% for x in form %}
+                <p> 
+                    {{x.label_tag}} {{x.errors|striptags}}
+                    <br>
+                    {{x}}
+                </p>
+            {% endfor %}
+                
+            <input type="submit" class="btn btn-primary" value="Submit"></input>
+        </form>
+        <a href="{% url 'signin' %}" class="text-center btn btn-success" style=" margin-top: 1cm;">If Existing User Click Here To Sign In</a>
+    </div>
+{% endblock b1 %}
