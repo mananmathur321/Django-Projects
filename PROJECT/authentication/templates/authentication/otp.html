@@ -1,0 +1,17 @@
+{% extends "core/base.html" %}
+{% load static %}
+{% block b1 %}
+    <div class="container mt-5">
+        <h1 class="text-center alert alert-danger">OTP</h1>
+
+      <div>
+        {{ms}}
+        <form action="" method="post">
+            {% csrf_token %}
+            {{form.as_p}}
+            <input type="submit" class="btn btn-primary" value="Check OTP ">
+       </form>
+      </div>
+
+    </div>
+{% endblock b1 %}

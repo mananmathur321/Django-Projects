@@ -1,0 +1,13 @@
+{% extends "core/base.html" %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'core/css/bootstrap.min.css'%}">
+{% block css %}
+    style="background-color: black;"
+{% endblock css %}
+{% block b1 %}
+    <div style="text-align:center;padding-top:100px;align-items:center;">
+        <a href="{% url 'signup'%}" class="btn btn-outline-light ">Sign Up</a>
+        <div  style="margin:1cm; display: inline;"></div>
+        <a href="{% url 'signin'%}" class="btn btn-outline-light ">Sign In</a>
+    </div>
+{% endblock b1 %}

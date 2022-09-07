@@ -1,0 +1,44 @@
+{% extends "core/base.html" %}
+{% block b1 %}
+<div class="container mt-5">
+  <h1 class="text-center alert alert-danger">Log In</h1>
+
+  <form action="" method="post" novalidate>
+      {% csrf_token %}
+
+      
+      {% for x in form %}
+          <p> 
+              {{x.label_tag}} {{x.errors|striptags}}
+              <br>
+              {{x}}
+          </p>
+      {% endfor %}
+    <input type="submit" class="btn btn-primary" value="Sign In ">
+  </form>
+  <a href="{% url 'signup' %}" class="text-center btn btn-warning" style=" margin-top: 1cm;">If New User Click Here To Sign Up</a>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <form action="" method="post">
+    {% csrf_token %}
+    
+{% endblock b1 %}

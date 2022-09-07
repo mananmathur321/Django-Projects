@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CRUD PROJECT</title>
+    <link rel="stylesheet" href="{% static 'core/css/all.min.css'%}">
+    <link rel="stylesheet" href="{% static 'core/css/bootstrap.min.css'%}">
+</head>
+<body {% block css %}{% endblock css %}>
+
+    <div class="container mt-5">
+        <h1 class="text-center alert alert-danger">CRUD OPERATIONS</h1>
+        {% block b1 %}{% endblock b1 %}
+        {% block b2 %}{% endblock b2 %}
+        {% block b3 %}{% endblock b3 %}
+    </div>
+            
+    <script src="{% static 'core/js/popper.js'%}"></script>
+    <script src="{% static 'core/js/jquery.js'%}"></script>
+    <script src="{% static 'core/js/all.min.js'%}"></script>
+    <script src="{% static 'core/js/bootstrap.min.js'%}"></script>
+</body>
+</html>
