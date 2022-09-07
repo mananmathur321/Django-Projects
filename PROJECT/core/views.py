@@ -17,9 +17,9 @@ URL='http://127.0.0.1:8000/stu/'
 def adddata(request):
     if request.user.is_authenticated and request.user.is_staff:
         tokensin = request.COOKIES.get('jwt')
-        result1=requests.post('http://127.0.0.1:8000/verifytoken/',{'token':tokensin}).text
-        data1=json.loads(result1)
-        if tokensin==result1 or len(data1)==0:
+        verify=requests.post('http://127.0.0.1:8000/verifytoken/',{'token':tokensin}).text
+        verifydata=json.loads(verify)
+        if tokensin==verify or len(verifydata)==0:
             if request.method == 'POST':
                 pf=StudentForm(request.POST)
                 if pf.is_valid():
@@ -48,15 +48,15 @@ def deletedata(request,id):
 def updatew(request,id):
     if request.user.is_authenticated and request.user.is_staff:
         if request.method == 'POST':
-            x=Student.objects.get(pk=id)
-            pf=StudentForm(request.POST, instance=x)
+            instnc=Student.objects.get(pk=id)
+            pf=StudentForm(request.POST, instance=instnc)
             if pf.is_valid():
                 fdata = pf.cleaned_data
                 requests.put(url=URL,data=fdata)
                 return HttpResponseRedirect('/view/')
         else:
-            x=Student.objects.get(pk=id)
-            pf=StudentForm(instance=x)  
+            instnc=Student.objects.get(pk=id)
+            pf=StudentForm(instance=instnc)  
             return render(request,'core/update.html', {'form':pf})
     else:
         return HttpResponseRedirect('/')
@@ -80,8 +80,8 @@ def api(request):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     if request.method == 'PUT':
-        x = request.data.get('id')
-        student = Student.objects.get(id=x)
+        data = request.data.get('id')
+        student = Student.objects.get(id=data)
         serializer = StudentSerializer(student, data=request.data)
         if serializer.is_valid():
             serializer.save()
@@ -89,8 +89,8 @@ def api(request):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     if request.method == 'PATCH':
-        x = request.data.get('id')
-        student = Student.objects.get(id=x)
+        data = request.data.get('id')
+        student = Student.objects.get(id=data)
         serializer = StudentSerializer(student, data=request.data, partial=True)
         if serializer.is_valid():
             serializer.save()
@@ -98,7 +98,7 @@ def api(request):
         return Response(serializer.errors)
 
     if request.method == 'DELETE':
-        x = request.data.get('id')
-        student = Student.objects.get(id=x)
+        data = request.data.get('id')
+        student = Student.objects.get(id=data)
         student.delete()
         return Response({'msg': 'Student Deleted'})

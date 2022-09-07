@@ -1,8 +1,10 @@
-from django.test import TestCase,SimpleTestCase,Client
+import imp
+from django.test import TestCase,SimpleTestCase,Client,TransactionTestCase
 from .models import Student
 from rest_framework.test import APITestCase
 from django.urls import reverse,resolve
 from .views import adddata,deletedata,updatew
+from .forms import StudentForm
 # Create your tests here.
 
 class StudentTestCase(TestCase):
@@ -126,3 +128,18 @@ class ViewFunctionsTest(TestCase):
         client=Client()
         response=client.get(reverse('updwin',args=['1']))
         self.assertRedirects(response, '/')
+        
+    
+class FormTest(TransactionTestCase):
+    
+    print("Testing 2 Cases Of Form Of Core App")
+    
+    def test_StudentForm_valid(self):
+        fdata={'id':1,'name':'Baba','mailid':'babadon@gmail.com','phoneno':7012018613}
+        form=StudentForm(data=fdata)
+        self.assertTrue(form.is_valid())
+        
+    def test_StudentForm_invalid(self):
+        fdata={}
+        form=StudentForm(data=fdata)
+        self.assertFalse(form.is_valid())

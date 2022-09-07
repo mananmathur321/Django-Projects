@@ -1,7 +1,7 @@
-from django.test import TestCase,SimpleTestCase,Client
+from django.test import TestCase,SimpleTestCase,Client,TransactionTestCase
 from django.urls import reverse,resolve
 from .views import signin,signup,otpverify,option,logoutpage
-
+from .forms import signupform,otpview
 
 # Create your tests here.
 # 'otp','signup','signin','option','logout'
@@ -52,3 +52,28 @@ class ViewFunctionsTest(TestCase):
         client=Client()
         response=client.get(reverse('logout'))
         self.assertRedirects(response, '/')
+        
+        
+class FormTest(TransactionTestCase):
+    
+    print("Testing 4 Cases Of Form Of Core App")
+    
+    def test_SignupForm_valid(self):
+        fdata={'username':'Baba','first_name':'Baba','last_name':'Baba','mailid':'babadon@gmail.com','password1':'manan321','password2':'manan321'}
+        form=signupform(data=fdata)
+        self.assertTrue(form.is_valid())
+        
+    def test_SignupForm_invalid(self):
+        fdata={}
+        form=signupform(data=fdata)
+        self.assertFalse(form.is_valid())
+        
+    def test_otpview_valid(self):
+        fdata={'otp':1234}
+        form=otpview(data=fdata)
+        self.assertTrue(form.is_valid())
+        
+    def test_otpview_invalid(self):
+        fdata={'otp':'abcd'}
+        form=otpview(data=fdata)
+        self.assertFalse(form.is_valid())

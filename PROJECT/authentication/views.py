@@ -41,8 +41,8 @@ def otpverify(request):
             print(form.cleaned_data['otp'])
             fotp=form.cleaned_data['otp']
             if fotp==otp:
-                m = User.objects.create_user(username=unm,email=ueml,password=upwd,first_name=fnm,last_name=lnm,is_staff=True)  
-                m.save()
+                instnc = User.objects.create_user(username=unm,email=ueml,password=upwd,first_name=fnm,last_name=lnm,is_staff=True)  
+                instnc.save()
                 print("User Created Successfully")
                 return HttpResponseRedirect('/signin/')
             else:
@@ -60,15 +60,15 @@ def signin(request):
         if y.is_valid():
             unm=y.cleaned_data['username']
             upwd=y.cleaned_data['password']            
-            result=requests.post('http://127.0.0.1:8000/gettoken/',{'username':unm,'password':upwd}).text
-            data=json.loads(result)
-            accesstoken=data["access"]
-            refreshtoken=data["refresh"]
+            gettoken=requests.post('http://127.0.0.1:8000/gettoken/',{'username':unm,'password':upwd}).text
+            tokendata=json.loads(gettoken)
+            accesstoken=tokendata["access"]
+            refreshtoken=tokendata["refresh"]
             print(accesstoken)
             
-            result1=requests.post('http://127.0.0.1:8000/verifytoken/',{'token':accesstoken}).text
-            data1=json.loads(result)
-            if accesstoken==result1 or len(data1)==0:
+            verify=requests.post('http://127.0.0.1:8000/verifytoken/',{'token':accesstoken}).text
+            veridata=json.loads(verify)
+            if accesstoken==verify or len(veridata)==0:
                 user=authenticate(username=unm, password=upwd)
                 if user is not None:
                     login(request,user)
